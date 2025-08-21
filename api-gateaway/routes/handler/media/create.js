@@ -10,14 +10,21 @@ module.exports = async (req, res) => {
         const media = await api.post('/media/upload', req.body);
         return res.status(201).json(media.data);
     } catch (error) {
-        if(error.code === 'ECONNREFUSED') {
+         if (error.code === 'ECONNREFUSED') {
             return res.status(500).json({
                 status: 'error',
                 message: 'Service Unavailable'
             });
-
         }
-        const {status, data} = error.response;
-        return res.status(status).json(data);
+
+        if (error.response) {
+            const { status, data } = error.response;
+            return res.status(status).json(data);
+        } else {
+            return res.status(500).json({
+                status: 'error',
+                message: error.message || 'Unexpected error'
+            });
+        }
     }
 }

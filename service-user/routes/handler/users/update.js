@@ -58,9 +58,14 @@ module.exports = async (req, res) => {
         avatar
     })
 
+    // Ambil ulang data user tanpa password
+    const updatedUser = await User.findByPk(id, {
+    attributes: { exclude: ['password'] }
+    });
+
     return res.status(200).json({
-        status: 'success',
-        message: 'User updated successfully',
-        data: user
+    status: 'success',
+    message: 'User updated successfully',
+    data: updatedUser
     });
 }

@@ -47,9 +47,13 @@ module.exports = async (req, res) => {
 
     const createUser = await User.create(data);
 
+    // 🔹 Hapus password sebelum mengirim response
+    const userData = createUser.toJSON();
+    delete userData.password;
+
     return res.status(201).json({
         status: 'success',
         message: 'User registered successfully',
-        data: createUser
+        data: userData
     });
 }

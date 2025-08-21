@@ -11,6 +11,10 @@ const coursesRouter = require('./routes/courses');
 const mediaRouter = require('./routes/media');
 const ordersRouter = require('./routes/orders');
 const paymentsRouter = require('./routes/payments');
+const refreshTokenRouter = require('./routes/refreshToken');
+
+//middleware 
+// const verifyToken = require('./middleware/verifyToken');
 
 const app = express();
 
@@ -30,6 +34,7 @@ app.use('/courses', coursesRouter);
 app.use('/media', mediaRouter);
 app.use('/orders', ordersRouter);
 app.use('/payments', paymentsRouter);
+app.use('/refresh-token', refreshTokenRouter);
 
 // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
