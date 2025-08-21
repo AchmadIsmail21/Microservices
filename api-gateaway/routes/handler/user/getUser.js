@@ -1,16 +1,17 @@
 const apiAdapter = require('../../apiAdapter');
 const {
-    URL_SERVICE_USER,
+    URL_SERVICE_USER
 } = process.env;
 
 const api = apiAdapter(URL_SERVICE_USER);
+
 module.exports = async (req, res) => {
     try {
         const userId = req.user.data.id;
-        // console.log(userId);
-        const user = await api.put(`/users/update/${userId}`, req.body);
-        // console.log(user.data);
+        const user = await api.get(`/users/${userId}`);
+
         return res.status(200).json(user.data);
+        
     } catch (error) {
         if (error.code === 'ECONNREFUSED') {
             return res.status(500).json({

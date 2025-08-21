@@ -22,6 +22,7 @@ module.exports = async (req, res) => {
 
     const id = req.params.id;
     const user = await User.findByPk(id);
+    
     if (!user) {
         return res.status(404).json({
             status: 'error',
@@ -58,14 +59,17 @@ module.exports = async (req, res) => {
         avatar
     })
 
-    // Ambil ulang data user tanpa password
-    const updatedUser = await User.findByPk(id, {
-    attributes: { exclude: ['password'] }
-    });
+    // Mengembalikan response sukses
 
     return res.status(200).json({
     status: 'success',
     message: 'User updated successfully',
-    data: updatedUser
+    data: {
+      id: user.id,
+      name,
+      email,
+      profession,
+      avatar
+    }
     });
 }

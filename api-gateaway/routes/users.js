@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-// const verifyToken = require('../middleware/verifyToken');
+const verifyToken = require('../middleware/verifyToken');
 
 const userHandler = require('./handler/user');
 /* GET users listing. */
@@ -11,6 +11,8 @@ router.post('/register',userHandler.register);
 
 router.post('/login', userHandler.login);
 
-router.put('/update/:id', userHandler.update);
+router.put('/update', verifyToken ,userHandler.update);
+
+router.get('/', verifyToken, userHandler.getUser);
 
 module.exports = router;
